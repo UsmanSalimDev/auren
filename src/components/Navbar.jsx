@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { ArrowRight, Menu, ShoppingBag, X } from 'lucide-react'
 import logo from '../assets/logo.png'
+import {pairOfferPrice} from '../lib/promotions.js'
 
 export default function Navbar({ bagCount, onOpenBag }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -9,7 +10,9 @@ export default function Navbar({ bagCount, onOpenBag }) {
 
   return (
     <header className="site-header">
-      <div className="announcement"><span />DISCOVER YOUR SIGNATURE SCENT<span /></div>
+      <Link to="/#pair-offer" className="announcement" onClick={closeMenu}>
+        <span /> LIMITED TIME · ANY 2 FRAGRANCES FOR RS{pairOfferPrice} <span /> <ArrowRight size={12} />
+      </Link>
       <nav className="navbar" aria-label="Main navigation">
         <Link to="/" className="brand" aria-label="Auren home" onClick={closeMenu}>
           <img src={logo} alt="Auren logo" className="brand-logo w-28" />
