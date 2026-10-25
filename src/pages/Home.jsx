@@ -65,6 +65,21 @@ export default function Home({ onAdd, onAddPair }) {
           </div>
         </section>
 
+        <section className="offer-marquee" aria-label="Limited-time fragrance offer">
+          <div className="offer-marquee-track">
+            {[0, 1].map((copy) => (
+              <div className="offer-marquee-group" key={copy} aria-hidden={copy === 1}>
+                <span><strong>40.08% OFF</strong> EVERY FRAGRANCE</span>
+                <i />
+                <span>NOW ONLY <strong>RS299 EACH</strong></span>
+                <i />
+                <span>LIMITED-TIME OFFER</span>
+                <i />
+              </div>
+            ))}
+          </div>
+        </section>
+
         <CoupleOffer onAdd={onAdd} onAddPair={onAddPair} />
 
         <section className="signature section-shell" id="collection">

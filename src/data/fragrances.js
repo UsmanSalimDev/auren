@@ -27,6 +27,16 @@
     notes: 'Bergamot · Vetiver · Sandalwood',
     category: 'Modern woody',
   },
+    {
+    id: 'eternity',
+    name: 'Eternity for Men',
+    note: 'Aromatic & Classic',
+    description: 'A romantic and enduring fragrance blending crisp green notes, aromatic spices, and warm woody undertones.',
+    price: 299,
+    image: eternity,
+    notes: 'Lavender · Mandarin · Sandalwood',
+    category: 'Aromatic Fougere',
+  },
 {
     id: 'red-rose',
     name: 'Red Rose',
@@ -57,15 +67,6 @@
     notes: 'Sea Water · Mint · Lavender',
     category: 'Aquatic Fresh',
   },
-  {
-    id: 'eternity',
-    name: 'Eternity for Men',
-    note: 'Aromatic & Classic',
-    description: 'A romantic and enduring fragrance blending crisp green notes, aromatic spices, and warm woody undertones.',
-    price: 299,
-    image: eternity,
-    notes: 'Lavender · Mandarin · Sandalwood',
-    category: 'Aromatic Fougere',
-  }
+
 
 ]

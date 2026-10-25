@@ -41,6 +41,14 @@
 .button-gold { background: var(--gold-light); color: var(--navy); }
 .button-outline { border: 1px solid rgba(255, 238, 208, .7); color: #fff9ed; }
 .button-outline:hover { border-color: var(--gold-light); background: rgba(12, 32, 53, .25); }
+.offer-marquee { height: 64px; overflow: hidden; display: flex; align-items: center; background: var(--navy); color: #f8f2e7; }
+.offer-marquee-track { display: flex; width: max-content; animation: offer-marquee-scroll 34s linear infinite; }
+.offer-marquee-group { display: flex; flex: 0 0 auto; align-items: center; gap: 42px; padding-right: 42px; white-space: nowrap; }
+.offer-marquee-group span { font-size: 14px; font-weight: 500; letter-spacing: .19em; }
+.offer-marquee-group strong { color: var(--gold-light); font-weight: 700; }
+.offer-marquee-group i { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.offer-marquee:hover .offer-marquee-track { animation-play-state: paused; }
+@keyframes offer-marquee-scroll { to { transform: translateX(-50%); } }
 .section-shell { width: min(100% - 48px, 1030px); margin: 0 auto; }
 .signature { padding: 13px 0 16px; }
 .section-heading { margin-bottom: 14px; text-align: center; }
@@ -345,6 +353,9 @@
   .hero-kicker { gap: 10px; font-size: 9px; }
   .hero-description { max-width: 330px; font-size: 11px; }
   .hero-actions .button { min-height: 42px; padding: 0 15px; font-size: 9px; }
+  .offer-marquee { height: 56px; }
+  .offer-marquee-group { gap: 28px; padding-right: 28px; }
+  .offer-marquee-group span { font-size: 12px; letter-spacing: .15em; }
   .section-heading h2 { gap: 7px; font-size: 19px; letter-spacing: .11em; }
   .section-heading h2 span { width: 8vw; }
   .signature-card { grid-template-columns: 40% 1fr; gap: 13px; padding: 7px; }
@@ -408,4 +419,5 @@
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .offer-marquee-track { animation: none; }
 }
