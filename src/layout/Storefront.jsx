@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
-import { ArrowRight, Gift, Minus, X } from 'lucide-react'
+import { ArrowRight, ArrowUp, Gift, Minus, X } from 'lucide-react'
 import { fragrances } from '../data/fragrances.js'
 import { getOrderPricing, pairOfferPrice } from '../lib/promotions.js'
 import Navbar from '../components/Navbar.jsx'
@@ -37,9 +37,46 @@ export default function Storefront() {
   const [bag, setBag] = useState([])
   const [notice, setNotice] = useState('')
   const [bagOpen, setBagOpen] = useState(false)
+  const [scrollState, setScrollState] = useState({ visible: false, progress: 0 })
   const {subtotal: bagSubtotal, discount: bagDiscount, total: bagTotal, qualifyingPairs: bagPairs} = getOrderPricing(bag)
   const noticeTimer = useRef(null)
   useEffect(() => () => window.clearTimeout(noticeTimer.current), [])
+
+  useEffect(() => {
+    let frameId
+
+    function updateScrollState() {
+      const scrollTop = window.scrollY
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight
+      const progress = scrollableHeight > 0 ? Math.min(scrollTop / scrollableHeight, 1) : 0
+      const hero = document.querySelector('.hero, .page-intro')
+      const controlThreshold = hero
+        ? hero.getBoundingClientRect().bottom + scrollTop
+        : 160
+      const visible = scrollTop >= controlThreshold
+
+      setScrollState((current) => (
+        current.visible === visible && current.progress === progress
+          ? current
+          : {visible, progress}
+      ))
+    }
+
+    function scheduleScrollUpdate() {
+      window.cancelAnimationFrame(frameId)
+      frameId = window.requestAnimationFrame(updateScrollState)
+    }
+
+    scheduleScrollUpdate()
+    window.addEventListener('scroll', scheduleScrollUpdate, {passive: true})
+    window.addEventListener('resize', scheduleScrollUpdate)
+
+    return () => {
+      window.cancelAnimationFrame(frameId)
+      window.removeEventListener('scroll', scheduleScrollUpdate)
+      window.removeEventListener('resize', scheduleScrollUpdate)
+    }
+  }, [location.pathname])
 
   function addToBag(fragrance) {
     setBag((items) => [...items, fragrance])
@@ -69,7 +106,7 @@ export default function Storefront() {
   return (
     <>
       <ScrollToTop />
-      <Navbar bagCount={bag.length} onOpenBag={() => setBagOpen(true)} />
+      <Navbar bagCount={bag.length} onOpenBag={() => setBagOpen(true)} isScrolled={scrollState.visible} />
       <Routes>
         <Route path="*" element={<PageSEO />} />
       </Routes>
@@ -110,6 +147,34 @@ export default function Storefront() {
               )}
             </motion.aside>
           </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {scrollState.visible && (
+          <motion.button
+            type="button"
+            className="scroll-top-button"
+            onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}
+            aria-label={`Scroll to top, ${Math.round(scrollState.progress * 100)}% page progress`}
+            title="Back to top"
+            initial={{opacity: 0, y: 12, scale: 0.85}}
+            animate={{opacity: 1, y: 0, scale: 1}}
+            exit={{opacity: 0, y: 10, scale: 0.85}}
+            transition={{duration: 0.2}}
+          >
+            <svg className="scroll-top-progress" viewBox="0 0 48 48" aria-hidden="true">
+              <circle className="scroll-top-track" cx="24" cy="24" r="21" />
+              <circle
+                className="scroll-top-progress-ring"
+                cx="24"
+                cy="24"
+                r="21"
+                strokeDasharray={2 * Math.PI * 21}
+                strokeDashoffset={2 * Math.PI * 21 * (1 - scrollState.progress)}
+              />
+            </svg>
+            <ArrowUp size={18} aria-hidden="true" />
+          </motion.button>
         )}
       </AnimatePresence>
       <a className="whatsapp-float" href="https://wa.me/923478925552" target="_blank" rel="noreferrer" aria-label="Chat with Auren on WhatsApp at +92 3478925552">

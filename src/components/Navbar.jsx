@@ -1,23 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowRight, Menu, ShoppingBag, X } from 'lucide-react'
 import logo from '../assets/logo.png'
 import {pairOfferPrice} from '../lib/promotions.js'
 
-export default function Navbar({ bagCount, onOpenBag }) {
+export default function Navbar({ bagCount, onOpenBag, isScrolled }) {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 160)
   const closeMenu = () => setMenuOpen(false)
-
-  useEffect(() => {
-    function updateScrollState() {
-      setIsScrolled(window.scrollY > 160)
-    }
-
-    window.addEventListener('scroll', updateScrollState, {passive: true})
-    return () => window.removeEventListener('scroll', updateScrollState)
-  }, [])
 
   return (
     <header className="site-header">
