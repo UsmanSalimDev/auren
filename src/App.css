@@ -21,6 +21,10 @@
 .bag-button { position: relative; padding: 7px 0; color: #f3ebdd; }
 .bag-label { font-size: 11px; }
 .bag-count { position: absolute; top: 0; right: -9px; display: grid; width: 15px; height: 15px; place-items: center; border-radius: 50%; background: var(--gold-light); color: var(--navy); font-size: 9px; }
+.bag-button-floating { position: fixed; z-index: 16; right: 20px; bottom: 76px; width: 46px; height: 46px; padding: 0; border: 1px solid rgba(223, 188, 124, .55); border-radius: 50%; background: var(--navy); box-shadow: 0 6px 22px rgba(12, 32, 53, .24); color: var(--gold-light); }
+.bag-button-floating:hover { background: var(--navy-light); }
+.bag-button-floating .bag-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+.bag-button-floating .bag-count { top: -3px; right: -3px; width: 19px; height: 19px; border: 2px solid var(--paper); font-size: 9px; }
 .mobile-menu-button { display: none; }
 
 .hero { position: relative; height: min(90vh, 820px); min-height: 590px; overflow: hidden; display: flex; align-items: center; background: #392a1d; color: #fffaf0; }
@@ -410,6 +414,7 @@
   .checkout-heading { margin-bottom: 23px; }
   .checkout-heading > p:last-child { line-height: 1.6; }
   .whatsapp-float { right: 12px; bottom: 12px; padding: 11px; }
+  .bag-button-floating { right: 12px; bottom: 68px; }
   .whatsapp-float > span { display: none; }
   .site-footer { padding: 22px 18px; }
   .site-footer > p { font-size: 12px; }

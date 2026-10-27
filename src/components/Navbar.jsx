@@ -1,12 +1,23 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import { ArrowRight, Menu, ShoppingBag, X } from 'lucide-react'
 import logo from '../assets/logo.png'
 import {pairOfferPrice} from '../lib/promotions.js'
 
 export default function Navbar({ bagCount, onOpenBag }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(() => window.scrollY > 160)
   const closeMenu = () => setMenuOpen(false)
+
+  useEffect(() => {
+    function updateScrollState() {
+      setIsScrolled(window.scrollY > 160)
+    }
+
+    window.addEventListener('scroll', updateScrollState, {passive: true})
+    return () => window.removeEventListener('scroll', updateScrollState)
+  }, [])
 
   return (
     <header className="site-header">
@@ -26,9 +37,15 @@ export default function Navbar({ bagCount, onOpenBag }) {
           <NavLink to="/story" onClick={closeMenu}>Our Story</NavLink>
         </div>
         <div className="nav-actions">
-          <button className="bag-button" onClick={onOpenBag} aria-label={`Open shopping bag, ${bagCount} items`}>
+          <motion.button
+            layout
+            transition={{type: 'spring', stiffness: 280, damping: 28}}
+            className={`bag-button${isScrolled ? ' bag-button-floating' : ''}`}
+            onClick={onOpenBag}
+            aria-label={`Open shopping bag, ${bagCount} items`}
+          >
             <ShoppingBag size={17} /><span className="bag-label">Bag</span>{bagCount > 0 && <span className="bag-count">{bagCount}</span>}
-          </button>
+          </motion.button>
           <Link to="/shop" className="nav-cta">Shop fragrances <ArrowRight size={14} /></Link>
         </div>
       </nav>
